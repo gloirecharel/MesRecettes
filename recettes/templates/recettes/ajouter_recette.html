@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une recette</title>
+    <link rel="stylesheet" href="{% static 'recettes/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>✨ Ajouter une recette</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">
+                🍳 Ajouter ma recette
+            </button>
+        </form>
+        
+        <div class="back-link">
+            <a href="{% url 'liste_recettes' %}">← Retour à mes recettes</a>
+        </div>
+    </div>
+</body>
+</html>

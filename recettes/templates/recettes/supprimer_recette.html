@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supprimer la recette</title>
+    <link rel="stylesheet" href="/static/recettes/style.css">
+</head>
+<body>
+    <h2>Supprimer la recette</h2>
+    <p>Es-tu sûr de vouloir supprimer la recette "<strong>{{ recette.titre }}</strong>" ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+        <a href="{% url 'liste_recettes' %}">Non, revenir</a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes recettes - MesRecettes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            padding-bottom: 3rem;
+        }
+
+        /* Navigation */
+        .nav-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.primary {
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            color: #333;
+        }
+
+        .nav-btn.primary:hover {
+            box-shadow: 0 5px 15px rgba(252, 182, 159, 0.4);
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Recipe Grid */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .recipe-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .recipe-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3rem;
+        }
+
+        .recipe-content {
+            padding: 1.5rem;
+        }
+
+        .recipe-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .recipe-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .recipe-section h4 {
+            color: #667eea;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .recipe-text {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .recipe-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-edit:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .btn-delete:hover {
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .empty-text {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .empty-cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .empty-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-actions {
+                justify-content: center;
+            }
+
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                padding: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .recipes-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .recipe-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                text-align: center;
+            }
+        }
+
+        /* Loading animation */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* Floating decorations */
+        .floating-icon {
+            position: fixed;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 10s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 15%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 70%;
+            right: 8%;
+            animation-delay: 3s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="#" class="logo">🍳 MesRecettes</a>
+            <div class="nav-actions">
+                <a href="{% url 'ajouter_recette' %}" class="nav-btn primary">
+                    ➕ Ajouter une recette
+                </a>
+                <a href="{% url 'recettes_communautaires' %}" class="nav-btn">
+                    👥 Communauté
+                </a>
+                <a href="{% url 'deconnexion' %}" class="nav-btn">
+                    🚪 Déconnexion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Floating decorations -->
+    <div class="floating-icon">🥄</div>
+    <div class="floating-icon">🍽️</div>
+    <div class="floating-icon">⭐</div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="page-header">
+            <h2 class="page-title">👨‍🍳 Mes Recettes</h2>
+            <p class="page-subtitle">Découvrez et gérez votre collection personnelle de recettes</p>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div class="recipes-grid">
+            <!-- Template for when recipes exist -->
+            {% for recette in recettes %}
+            <div class="recipe-card">
+                {% if recette.photo %}
+                <img src="{{ recette.photo.url }}" alt="{{ recette.titre }}" class="recipe-image">
+                {% else %}
+                <div class="recipe-image-placeholder">
+                    🍳
+                </div>
+                {% endif %}
+                
+                <div class="recipe-content">
+                    <h3 class="recipe-title">{{ recette.titre }}</h3>
+                    
+                    <div class="recipe-section">
+                        <h4>🥕 Ingrédients</h4>
+                        <div class="recipe-text">{{ recette.ingredients|linebreaks }}</div>
+                    </div>
+                    
+                    <div class="recipe-section">
+                        <h4>📝 Étapes</h4>
+                        <div class="recipe-text">{{ recette.etapes|linebreaks }}</div>
+                    </div>
+                    
+                    <div class="recipe-actions">
+                        <a href="{% url 'modifier_recette' recette.pk %}" class="action-btn btn-edit">
+                            ✏️ Modifier
+                        </a>
+                        <a href="{% url 'supprimer_recette' recette.pk %}" class="action-btn btn-delete" 
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">
+                            🗑️ Supprimer
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Empty state -->
+            <div class="empty-state">
+                <div class="empty-icon">🍳</div>
+                <h3 class="empty-title">Aucune recette pour le moment</h3>
+                <p class="empty-text">
+                    Vous n'avez pas encore créé de recette. Commencez dès maintenant à partager vos créations culinaires !
+                </p>
+                <a href="{% url 'ajouter_recette' %}" class="empty-cta">
+                    ✨ Créer ma première recette
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scroll and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll
+            const cards = document.querySelectorAll('.recipe-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Add loading state simulation
+            const images = document.querySelectorAll('.recipe-image');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.5s ease';
+            });
+        });
+
+        // Confirm deletion with better UX
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const recipeTitle = this.closest('.recipe-card').querySelector('.recipe-title').textContent;
+                if (confirm(`Êtes-vous sûr de vouloir supprimer la recette "${recipeTitle}" ? Cette action est irréversible.`)) {
+                    window.location.href = this.href;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

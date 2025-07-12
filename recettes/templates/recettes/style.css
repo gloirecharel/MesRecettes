@@ -1,0 +1,81 @@
+/* Style général pour tous les templates */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+
+h1, h2 {
+    color: #2d6a4f;
+    text-align: center;
+    margin-top: 30px;
+}
+
+a {
+    color: #40916c;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+    transition: color 0.2s;
+}
+a:hover {
+    color: #1b4332;
+    text-decoration: underline;
+}
+
+form {
+    background: #fff;
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 30px 25px 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+button {
+    background: #40916c;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+button:hover {
+    background: #1b4332;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: 30px auto;
+}
+li {
+    background: #fff;
+    margin-bottom: 18px;
+    padding: 18px 22px;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+img {
+    border-radius: 8px;
+    margin: 10px 0;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    form, ul {
+        max-width: 95%;
+        padding: 10px;
+    }
+    li {
+        padding: 10px 8px;
+    }
+}

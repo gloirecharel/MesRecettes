@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recettes des autres cuisiniers</title>
+    <link rel="stylesheet" href="/static/recettes/style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h2>👥 Recettes des autres cuisiniers</h2>
+        </div>
+        
+        <div class="nav-links">
+            <a href="{% url 'liste_recettes' %}">📖 Mes recettes</a>
+            <span class="separator">|</span>
+            <a href="{% url 'deconnexion' %}">🚪 Déconnexion</a>
+        </div>
+        
+        <ul class="recettes-grid">
+            {% for recette in recettes %}
+            <li class="recette-card">
+                {% if recette.photo %}
+                    <img src="{{ recette.photo.url }}" alt="Photo de {{ recette.titre }}" class="recette-image">
+                {% else %}
+                    <div class="no-image">🍽️</div>
+                {% endif %}
+                
+                <div class="recette-content">
+                    <h3 class="recette-title">{{ recette.titre }}</h3>
+                    <p class="recette-author">{{ recette.cuisinier.prenom }}</p>
+                    
+                    <div class="recette-section">
+                        <h4 class="section-title ingredients">Ingrédients</h4>
+                        <div class="section-content">{{ recette.ingredients|linebreaks }}</div>
+                    </div>
+                    
+                    <div class="recette-section">
+                        <h4 class="section-title etapes">Étapes</h4>
+                        <div class="section-content">{{ recette.etapes|linebreaks }}</div>
+                    </div>
+                </div>
+            </li>
+            {% empty %}
+            <li class="empty-message">
+                Aucune recette d'autres cuisiniers pour le moment.
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

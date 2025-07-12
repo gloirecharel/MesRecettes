@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modifier la recette</title>
+    <link rel="stylesheet" href="/static/recettes/style.css">
+</head>
+<body>
+    <h2>Modifier la recette</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enregistrer</button>
+    </form>
+    <div style="text-align:center;">
+        <a href="{% url 'liste_recettes' %}">Annuler</a>
+    </div>
+</body>
+</html>
